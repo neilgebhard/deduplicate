@@ -42,12 +42,9 @@ function removeDuplicates(arr, prop) {
 function toTable(records) {
     return records.map(function(record) {
         var html = '<tr>';
-        html += '<td>' + record._id + '</td>';
-        html += '<td>' + record.address + '</td>';
-        html += '<td>' + record.email + '</td>';
-        html += '<td>' + record.entryDate + '</td>';
-        html += '<td>' + record.firstName + '</td>';
-        html += '<td>' + record.lastName + '</td>';
+        for(var key in record) {
+            html += '<td>' + record[key] + '</td>';
+        }
         html += '</tr>';
         return html;
     }).join("")
@@ -60,13 +57,9 @@ XHR('leads.json', function(json) {
     // Remove duplicates based on _id
     var unique2 = removeDuplicates(unique1.filtered, "_id");
 
-    // Output all records on web
+    // Output all records to web
     document.getElementById('original').innerHTML += toTable(json.leads);
     document.getElementById('removed-by-email').innerHTML += toTable(unique1.removed);
     document.getElementById('removed-by-id').innerHTML += toTable(unique2.removed);
     document.getElementById('filtered').innerHTML += toTable(unique2.filtered);
-    // $('#original').append(toTable(json.leads));
-    // $('#removed-by-email').append(toTable(unique1.removed));
-    // $('#removed-by-id').append(toTable(unique2.removed));
-    // $('#filtered').append(toTable(unique2.filtered));
 });
