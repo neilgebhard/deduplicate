@@ -12,7 +12,7 @@ $ git clone https://github.com/neilgebhard/deduplicate.git
 $ cd deduplicate/
 ```
 
-3) Start a server locally. Here are a few options:
+3) Start a server locally. Here are a few options depending on what you have installed on your machine:
 
 * Option #1
 

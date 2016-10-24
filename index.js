@@ -51,15 +51,11 @@ function toTable(records) {
 }
 
 XHR('leads.json', function(json) {
-    // Remove duplicates based on email
-    var unique1 = removeDuplicates(json.leads, "email");
-
-    // Remove duplicates based on _id
-    var unique2 = removeDuplicates(unique1.filtered, "_id");
-
-    // Output all records to web
+    var uniqueByEmail = removeDuplicates(json.leads, "email");
+    var uniqueById = removeDuplicates(uniqueByEmail.filtered, "_id");
     document.getElementById('original').innerHTML += toTable(json.leads);
-    document.getElementById('removed-by-email').innerHTML += toTable(unique1.removed);
-    document.getElementById('removed-by-id').innerHTML += toTable(unique2.removed);
-    document.getElementById('filtered').innerHTML += toTable(unique2.filtered);
+    document.getElementById('removed-by-email').innerHTML += toTable(uniqueByEmail.removed);
+    document.getElementById('removed-by-id').innerHTML += toTable(uniqueById.removed);
+    document.getElementById('filtered').innerHTML += toTable(uniqueById.filtered);
+    document.getElementById('output-json').innerHTML += JSON.stringify({leads: uniqueById.filtered});
 });
