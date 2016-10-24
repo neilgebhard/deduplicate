@@ -14,24 +14,29 @@ function removeDuplicates(arr, prop) {
     var lookup = {};
     var filtered = [];
     var removed = [];
-
+    var order = [];
     arr.forEach(function(item) {
         var val = item[prop];
         if (!lookup[val]) {
             lookup[val] = item;
+            order.push(val);
         } else {
             var date1 = new Date(lookup[val].entryDate);
             var date2 = new Date(item.entryDate);
             if (date2.getTime() >= date1.getTime()) {
                 removed.push(lookup[val]);
                 lookup[val] = item;
+                order = order.filter(function(key) {
+                    return key !== val;
+                });
+                order.push(val);
             }
         }
     });
 
-    for (var key in lookup) {
+    order.forEach(function(key) {
         filtered.push(lookup[key]);
-    }
+    });
 
     return {
         filtered: filtered,
